@@ -65,6 +65,17 @@ export const initDatabase = async () => {
   `)
 
   await db.execAsync(`
+    CREATE INDEX IF NOT EXISTS timestamp_range_index
+    ON TICKET(start_timestamp);
+
+    CREATE INDEX IF NOT EXISTS idx_ticket_puid
+    ON TICKET(puid);
+
+    CREATE INDEX IF NOT EXISTS idx_ticket_staff_id
+    ON TICKET(staff_id);
+  `);
+
+  await db.execAsync(`
     CREATE TABLE IF NOT EXISTS TICKET_CC (
       ticket_id INTEGER NOT NULL,
       staff_id INTEGER NOT NULL,
